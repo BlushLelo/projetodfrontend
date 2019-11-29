@@ -20,25 +20,12 @@
 
 <section>
   <div>
-    <p>Cpf:</p>
-    <input type="text" placeholder="Digite o seu cpf" id="rcpf">
-    <script type="text/javascript">
-      $("#rcpf").mask("000.000.000-00");
-    </script>
-    <p>Senha:</p>
-    <input type="password" placeholder="Digite a sua senha" id="rpassword">
+    <p>Provider Name:</p>
+    <input type="text" placeholder="Digite o userName do provider" id="rproviderr">
     <br>
-    <p>UserName:</p>
-    <input type="text" placeholder="Digite o seu cpf" id="ruserName">
-    <p>Rg:</p>
-    <input type="text" placeholder="Digite seu rg" id="rrg">
-    <script type="text/javascript">
-      $("#rrg").mask("00.000.000-0");
-    </script>
+    <input type="text" placeholder="Digite o serviço requisitado" id="rservice">
     <br>
-    <p>Contato:</p>
-    <input type="email" placeholder="Digite seu contato" id="rcontato">
-    <button id="registrar" onclick="createUser()">Registrar</button>
+    <button id="askForService" onclick="askForService()">Requisitar Serviço</button>
   </div>
 </section>
 </body>

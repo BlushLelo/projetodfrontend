@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8080/"
+const baseUrl = "http://localhost:8081/"
 
 function login() {
   let userName = document.getElementById('luserName').value;
@@ -30,6 +30,20 @@ function  createUser() {
     contact: contato,
   }).then(function (response) {
     prompt("Cadastro realizado com sucesso")
+  }).catch(function (error) {
+    console.log(error)
+  })
+}
+
+function askForService() {
+  let providerName =  document.getElementById('rproviderr').value;
+  let service =  document.getElementById('rservice').value;
+  axios.post(baseUrl + "services", {
+    userName: "joao",
+    providerName: providerName,
+    serviceRequested: service,
+  }).then(function (response) {
+    prompt("Serviço criado com sucesso")
   }).catch(function (error) {
     console.log(error)
   })
