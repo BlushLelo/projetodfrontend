@@ -8,7 +8,12 @@ function login() {
     senha: password
   }).then(function (response) {
     if (response.status === 200) {
-      prompt("Login efetuado com sucesso")
+      if (response.data.role === "USER" ) {
+        window.location.href = "userPage.html"
+      }
+      if (response.data.role === "PROVIDER" ) {
+        window.location.href = "providerPage.html"
+      }
     }
   }).catch(function (error) {
     console.log(error)
@@ -33,6 +38,43 @@ function  createUser() {
   }).catch(function (error) {
     console.log(error)
   })
+}
+
+
+function createProvider() {
+  let cpf =  document.getElementById('rcpfp').value;
+  let senha =  document.getElementById('rpasswordp').value;
+  let userName =  document.getElementById('ruserNamep').value;
+  let rg =  document.getElementById('rrgp').value;
+  let contato =  document.getElementById('rcontatop').value;
+  axios.post(baseUrl + "provider", {
+    cpf: cpf,
+    senha: senha,
+    userName: userName,
+    rg: rg,
+    contact: contato,
+  }).then(function (response) {
+    prompt("Cadastro realizado com sucesso")
+  }).catch(function (error) {
+    console.log(error)
+  })
+}
+
+function searchProviders() {
+  let senha =  document.getElementById('askedSection');
+  senha.childNodes[1].appendChild( )
+
+  axios.get(baseUrl + "/user/service", {
+    userName: "joao"
+  }).then(function (response) {
+    //TODO -- Iterate over response.data.services adding a li ? in a Section for askedServices
+
+
+  }).catch(function (error) {
+    console.log(error)
+
+  })
+
 }
 
 function askForService() {

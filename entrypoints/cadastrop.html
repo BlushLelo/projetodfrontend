@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+</head>
+<body>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="../js/vendor/modernizr-3.7.1.min.js"></script>
+<script src="../js/plugins.js"></script>
+<script src="../js/main.js"></script>
+<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+<section>
+  <div>
+    <p>Cpf:</p>
+    <input type="text" placeholder="Digite o seu cpf" id="rcpfp">
+    <script type="text/javascript">
+      $("#rcpfp").mask("000.000.000-00");
+    </script>
+    <p>Senha:</p>
+    <input type="password" placeholder="Digite a sua senha" id="rpasswordp">
+    <br>
+    <p>UserName:</p>
+    <input type="text" placeholder="Digite o seu cpf" id="ruserNamep">
+    <p>Rg:</p>
+    <input type="text" placeholder="Digite seu rg" id="rrgp">
+    <script type="text/javascript">
+      $("#rrgp").mask("00.000.000-0");
+    </script>
+    <br>
+    <p>Contato:</p>
+    <input type="email" placeholder="Digite seu contato" id="rcontatop">
+    <button id="registrar" onclick="createProvider()">Registrar</button>
+  </div>
+</section>
+</body>
+</html>
