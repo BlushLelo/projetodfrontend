@@ -81,6 +81,7 @@ function askForService() {
   let providerName =  document.getElementById('rproviderr').value;
   let service =  document.getElementById('rservice').value;
   axios.post(baseUrl + "services", {
+    //TODO - Unfix userName getting it from Cookies or Session
     userName: "joao",
     providerName: providerName,
     serviceRequested: service,
