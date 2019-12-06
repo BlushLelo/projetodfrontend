@@ -1,17 +1,19 @@
 const baseUrl = "http://localhost:8081/"
 
 function login() {
-  let userName = document.getElementById('luserName').value;
+  let cpf = document.getElementById('luserCpf').value;
   let password = document.getElementById('lpassword').value;
   axios.post(baseUrl + "Login", {
-    userName: userName,
+    cpf: cpf,
     senha: password
   }).then(function (response) {
     if (response.status === 200) {
       if (response.data.role === "USER") {
+        document.cookie = "userCpf=" + cpf.replace(/[^a-zA-Z0-9]/g, '')
         window.location.href = "userPage.html"
       }
       if (response.data.role === "PROVIDER") {
+        document.cookie = "providerCpf=" + cpf.replace(/[^a-zA-Z0-9]/g, '')
         window.location.href = "providerPage.html"
       }
     }
@@ -34,9 +36,8 @@ function createUser() {
     rg: rg,
     contact: contato,
   }).then(function (response) {
-    if(response.status === 200) {
-      document.cookie="userName=" + userName
-      document.cookie="userCpf=" + cpf.replace(/[^a-zA-Z0-9]/g, '')
+    if (response.status === 200) {
+      window.location.href = "login.html"
     }
   }).catch(function (error) {
     console.log(error)
@@ -57,42 +58,46 @@ function createProvider() {
     rg: rg,
     contact: contato,
   }).then(function (response) {
-    if(response.status === 200) {
-      document.cookie="providerName=" + userName
-      document.cookie="providerCpf=" + cpf.replace(/[^a-zA-Z0-9]/g, '')
+    if (response.status === 200) {
+      window.location.href = "login.html"
     }
   }).catch(function (error) {
     console.log(error)
   })
 }
 
-function searchProviders() {
-  let senha = document.getElementById('askedSection');
-  senha.childNodes[1].appendChild()
-
-  axios.get(baseUrl + "/user/service", {
-    userName: "joao"
-  }).then(function (response) {
-    //TODO -- Iterate over response.data.services adding a li ? in a Section for askedServices
-
+function loadServices() {
+  let providerCpf = getCookie("providerCpf");
+  axios.get(baseUrl + "/service", {}).then(function (response) {
+    let section = document.getElementById('requestServiceSection');
+    if (response.status === 200) {
+      if (response.data.length > 0) {
+        for (var i = 0; i < response.data.length; i++) {
+          section.innerHTML = section.innerHTML + "<div class='serviceRequested' onClick='askForService(" + providerCpf + ", \"" + response.data[i].serviceName + "\")'> <p>ProviderName: " + response.data[i].providerName + "</p> <p>ServiceName: " + response.data[i].serviceName +
+            "</p> <p>Descrição do Serviço: " + response.data[i].serviceDescription + "</p> <p>Categoria: " + response.data[i].category +
+            "</p> <p>Valor: " + response.data[i].value + "</p> </div><br>"
+        }
+      } else {
+        section.innerHTML = "<div><p>Ninguém cadastrou serviço</p></div>"
+      }
+    }
 
   }).catch(function (error) {
-    console.log(error)
+    section.innerHTML = "<div><p>Erro ao listar serviços</p></div>"
 
   })
 
 }
 
-function askForService() {
-  let providerName = document.getElementById('rproviderr').value;
-  let service = document.getElementById('rservice').value;
-  axios.post(baseUrl + "services", {
-    //TODO - Unfix userName getting it from Cookies or Session
-    userName: "joao",
-    providerName: providerName,
-    serviceRequested: service,
+function askForService(providerCpf, serviceName) {
+  let cpf = getCookie("userCpf");
+
+  axios.post(baseUrl + "service/" + cpf, {
+    providerCpf: providerCpf,
+    serviceName: serviceName,
   }).then(function (response) {
-    prompt("Serviço criado com sucesso")
+    alert("Serviço requisitado com sucesso")
+    window.location.href = "userPage.html"
   }).catch(function (error) {
     console.log(error)
   })
@@ -111,9 +116,46 @@ function createService() {
     category: category,
     value: value
   }).then(function (response) {
-    prompt("Serviço criado com sucesso")
+    if (response.status === 200) {
+      alert("Serviço cadastrado com sucesso")
+      window.location.href = "../providerPage.html"
+    }
   }).catch(function (error) {
     console.log("error")
+  })
+
+}
+
+function loadProviderServicesDone() {
+  let cpf = getCookie("providerCpf");
+  axios.get(baseUrl + "service/provider/" + cpf).then(function (response) {
+    if (response.status === 200) {
+      let section = document.getElementById("providerServicesSection")
+      for (var i = 0; i < response.data.length; i++) {
+        section.innerHTML = section.innerHTML + "<div class='serviceRequestedList'> CPF do requisitante: " + response.data[i].userCpf + "<br> Serviço prestado: " + response.data[i].serviceName +
+          "<br> Valor: " + response.data[i].value + "</div><br> "
+      }
+    }
+  }).catch(function (error) {
+    let section = document.getElementById("providerServicesSection")
+    section.innerHTML = "<div><p>Você não prestou nenhum serviço</p></div>"
+  })
+
+}
+
+function loadUserServicesAsked() {
+  let cpf = getCookie("userCpf");
+  axios.get(baseUrl + "service/user/" + cpf).then(function (response) {
+    if (response.status === 200) {
+      let section = document.getElementById("userServicesSection")
+      for (var i = 0; i < response.data.length; i++) {
+        section.innerHTML = section.innerHTML + "<div class='serviceRequestedList'> CPF do prestador: " + response.data[i].providerCpf + "<br> Serviço prestado: " + response.data[i].serviceName +
+          "<br> Valor: " + response.data[i].value + "</div><br> "
+      }
+    }
+  }).catch(function (error) {
+    let section = document.getElementById("userServicesSection")
+    section.innerHTML = "<div><p>Você não prestou nenhum serviço</p></div>"
   })
 
 }
