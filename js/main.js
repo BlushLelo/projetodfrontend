@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8081/"
+const baseUrl = "https://projetointegrado.herokuapp.com"
 
 function login() {
   let cpf = document.getElementById('luserCpf').value;
