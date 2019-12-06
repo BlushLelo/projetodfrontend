@@ -3,7 +3,7 @@ const baseUrl = "https://projetointegrado.herokuapp.com"
 function login() {
   let cpf = document.getElementById('luserCpf').value;
   let password = document.getElementById('lpassword').value;
-  axios.post(baseUrl + "Login", {
+  axios.post(baseUrl + "/Login", {
     cpf: cpf,
     senha: password
   }).then(function (response) {
@@ -29,7 +29,7 @@ function createUser() {
   let userName = document.getElementById('ruserName').value;
   let rg = document.getElementById('rrg').value;
   let contato = document.getElementById('rcontato').value;
-  axios.post(baseUrl + "user", {
+  axios.post(baseUrl + "/user", {
     cpf: cpf,
     senha: senha,
     userName: userName,
@@ -51,7 +51,7 @@ function createProvider() {
   let userName = document.getElementById('ruserNamep').value;
   let rg = document.getElementById('rrgp').value;
   let contato = document.getElementById('rcontatop').value;
-  axios.post(baseUrl + "provider", {
+  axios.post(baseUrl + "/provider", {
     cpf: cpf,
     senha: senha,
     userName: userName,
@@ -92,7 +92,7 @@ function loadServices() {
 function askForService(providerCpf, serviceName) {
   let cpf = getCookie("userCpf");
 
-  axios.post(baseUrl + "service/" + cpf, {
+  axios.post(baseUrl + "/service/" + cpf, {
     providerCpf: providerCpf,
     serviceName: serviceName,
   }).then(function (response) {
@@ -109,7 +109,7 @@ function createService() {
   let category = document.getElementById('sCategoria').value;
   let value = document.getElementById('sValue').value;
   let cpf = getCookie("providerCpf");
-  axios.post(baseUrl + "service", {
+  axios.post(baseUrl + "/service", {
     providerCpf: cpf,
     serviceName: serviceName,
     serviceDescription: serviceDescription,
@@ -128,7 +128,7 @@ function createService() {
 
 function loadProviderServicesDone() {
   let cpf = getCookie("providerCpf");
-  axios.get(baseUrl + "service/provider/" + cpf).then(function (response) {
+  axios.get(baseUrl + "/service/provider/" + cpf).then(function (response) {
     if (response.status === 200) {
       let section = document.getElementById("providerServicesSection")
       for (var i = 0; i < response.data.length; i++) {
@@ -145,7 +145,7 @@ function loadProviderServicesDone() {
 
 function loadUserServicesAsked() {
   let cpf = getCookie("userCpf");
-  axios.get(baseUrl + "service/user/" + cpf).then(function (response) {
+  axios.get(baseUrl + "/service/user/" + cpf).then(function (response) {
     if (response.status === 200) {
       let section = document.getElementById("userServicesSection")
       for (var i = 0; i < response.data.length; i++) {
