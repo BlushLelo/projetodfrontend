@@ -1,4 +1,4 @@
-const baseUrl = "https://projetointegrado.herokuapp.com"
+const baseUrl = "http://localhost:8081"
 
 function login() {
   let cpf = document.getElementById('luserCpf').value;
@@ -18,7 +18,7 @@ function login() {
       }
     }
   }).catch(function (error) {
-    console.log(error)
+    alert("Credenciais incorretas, tente novamente!")
   })
 }
 
@@ -37,6 +37,7 @@ function createUser() {
     contact: contato,
   }).then(function (response) {
     if (response.status === 200) {
+      alert("Usuário cadastrado com sucesso!")
       window.location.href = "login.html"
     }
   }).catch(function (error) {
@@ -59,6 +60,7 @@ function createProvider() {
     contact: contato,
   }).then(function (response) {
     if (response.status === 200) {
+      alert("Usuário cadastrado com sucesso!")
       window.location.href = "login.html"
     }
   }).catch(function (error) {
@@ -127,12 +129,14 @@ function createService() {
 }
 
 function loadProviderServicesDone() {
+  let section = document.getElementById("providerServicesSection")
+  section.innerHTML = ""
   let cpf = getCookie("providerCpf");
   axios.get(baseUrl + "/service/provider/" + cpf).then(function (response) {
     if (response.status === 200) {
       let section = document.getElementById("providerServicesSection")
       for (var i = 0; i < response.data.length; i++) {
-        section.innerHTML = section.innerHTML + "<div class='serviceRequestedList'> CPF do requisitante: " + response.data[i].userCpf + "<br> Serviço prestado: " + response.data[i].serviceName +
+        section.innerHTML = section.innerHTML + "<div class='serviceRequestedList'> Nome do requisitante: " + response.data[i].providerName + "<br> Serviço prestado: " + response.data[i].serviceName +
           "<br> Valor: " + response.data[i].value + "</div><br> "
       }
     }
@@ -144,12 +148,14 @@ function loadProviderServicesDone() {
 }
 
 function loadUserServicesAsked() {
+  let section = document.getElementById("userServicesSection")
+  section.innerHTML = ""
   let cpf = getCookie("userCpf");
   axios.get(baseUrl + "/service/user/" + cpf).then(function (response) {
     if (response.status === 200) {
       let section = document.getElementById("userServicesSection")
       for (var i = 0; i < response.data.length; i++) {
-        section.innerHTML = section.innerHTML + "<div class='serviceRequestedList'> CPF do prestador: " + response.data[i].providerCpf + "<br> Serviço prestado: " + response.data[i].serviceName +
+        section.innerHTML = section.innerHTML + "<div class='serviceRequestedList'> Nome do prestador: " + response.data[i].providerName + "<br> Serviço prestado: " + response.data[i].serviceName +
           "<br> Valor: " + response.data[i].value + "</div><br> "
       }
     }

@@ -12,6 +12,11 @@
 <script src="../js/main.js"></script>
 <link rel="stylesheet" href="../css/index.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
 
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -19,8 +24,11 @@
 
 <section>
   <div>
-    <p>UserName:</p>
-    <input type="text" placeholder="Digite o seu login" id="luserCpf">
+    <p>Cpf:</p>
+    <input type="text" placeholder="Digite o seu cpf" id="luserCpf">
+    <script type="text/javascript">
+      $("#luserCpf").mask("000.000.000-00");
+    </script>
     <p>Password:</p>
     <input type="password" placeholder="Digite a sua senha" id="lpassword">
     <br>
